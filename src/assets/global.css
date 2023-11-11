@@ -1,0 +1,94 @@
+body {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  background: #ea7649;
+}
+
+.welcome-img {
+  width: 70%;
+  object-fit: cover;
+}
+
+.welcome-title {
+  font-weight: bold;
+  font-size: 35px;
+  color: rgb(39, 39, 39);
+}
+.colored {
+  color: rgb(231, 176, 76);
+}
+
+.welcome-header {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.carousel-indicators {
+  bottom: -70px;
+}
+
+.carousel-inner {
+  color: white;
+  font-family: "Barlow Semi Condensed", sans-serif;
+}
+.carousel-inner h3 {
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+.carousel-inner p {
+  color: rgb(230, 230, 230);
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.welcome {
+  overflow-y: hidden;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.carousel-indicators [data-bs-target]:last-of-type {
+  margin-right: 0;
+}
+
+.signup {
+  background-color: #5cc981;
+  color: white;
+}
+
+.form-container {
+  width: 100%;
+  min-height: 250px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50px 50px 0 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  gap: 20px;
+}
+
+.form-container form button {
+  width: 85%;
+  height: 60px;
+  border: none;
+  border-radius: 15px;
+  font-size: 20px;
+}
+.signin {
+  background-color: #3b3b3b;
+  color: #fff;
+}
