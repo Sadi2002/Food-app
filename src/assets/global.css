@@ -43,8 +43,9 @@ body {
   margin: 0 auto;
 }
 
-.welcome {
-  overflow-y: hidden;
+#carouselExampleIndicators {
+  max-width: 576px;
+  margin: 0 auto;
 }
 
 .carousel-indicators [data-bs-target] {
@@ -58,11 +59,6 @@ body {
   margin-right: 0;
 }
 
-.signup {
-  background-color: #5cc981;
-  color: white;
-}
-
 .form-container {
   width: 100%;
   min-height: 250px;
@@ -70,6 +66,9 @@ body {
   border-radius: 50px 50px 0 0;
   position: absolute;
   bottom: 0;
+  max-width: 576px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .form-container form {
@@ -88,7 +87,21 @@ body {
   border-radius: 15px;
   font-size: 20px;
 }
-.signin {
+.signin,
+.signup {
   background-color: #3b3b3b;
   color: #fff;
+  transition: all 0.3s;
+}
+
+.signup {
+  background-color: #5cc981;
+}
+
+.signin:hover {
+  background-color: #5cc981;
+}
+
+.signup:hover {
+  background-color: #3b3b3b;
 }
