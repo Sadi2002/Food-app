@@ -37,11 +37,15 @@
 <script>
 import { ref } from "vue";
 import { useSignin } from "../composables/useSignin";
+import { useRouter } from "vue-router";
+
 export default {
   props: ["showModalIn"],
   setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
+
+    const router = useRouter();
 
     const { error, signin } = useSignin();
 
@@ -52,7 +56,7 @@ export default {
     const handleSubmit = async () => {
       await signin(email.value, password.value);
       if (!error.value) {
-        console.log("zalogowany");
+        router.push({ name: "Recipes" });
       }
     };
 

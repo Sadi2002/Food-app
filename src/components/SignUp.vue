@@ -6,12 +6,12 @@
     </div>
     <form @submit.prevent="handleSubmit">
       <div class="form-box">
-        <label>Imię i nazwisko</label>
+        <label>Imię</label>
         <input
           type="text"
           v-model="name"
           required
-          placeholder="Wpisz imię i nazwisko"
+          placeholder="Wpisz swoje imię"
         />
       </div>
       <div class="form-box">

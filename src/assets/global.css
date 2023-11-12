@@ -34,6 +34,10 @@ body {
   color: #3b3b3b;
 }
 
+.colored-red {
+  color: rgb(231 135 76);
+}
+
 .welcome-header {
   position: absolute;
   left: 50%;
