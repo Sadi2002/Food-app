@@ -20,6 +20,7 @@ export default {
     onMounted(() => {
       if (route.path === "/recipes") {
         document.body.style.backgroundColor = "white";
+        document.body.style.overflowY = "visible";
       } else if (route.path === "/welcome") {
         document.body.style.backgroundColor = "#ea7649";
       }
