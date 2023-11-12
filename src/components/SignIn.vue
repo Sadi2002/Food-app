@@ -4,14 +4,24 @@
       <h3 class="sign-in-title">Zaloguj się</h3>
       <span class="sign-in-info">Zaloguj się, aby kontynuować</span>
     </div>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <div class="form-box">
         <label>Email</label>
-        <input type="text" v-model="email" />
+        <input
+          type="email"
+          v-model="email"
+          required
+          placeholder="Wpisz adres e-mail"
+        />
       </div>
       <div class="form-box">
         <label>Hasło</label>
-        <input type="text" v-model="password" />
+        <input
+          type="password"
+          v-model="password"
+          required
+          placeholder="Wpisz hasło"
+        />
       </div>
       <button class="form-sign-in">Zaloguj się</button>
     </form>
@@ -26,20 +36,33 @@
 
 <script>
 import { ref } from "vue";
+import { useSignin } from "../composables/useSignin";
 export default {
   props: ["showModalIn"],
   setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
 
+    const { error, signin } = useSignin();
+
     const showSignUp = () => {
       emit("switch-modal", "signUp");
+    };
+
+    const handleSubmit = async () => {
+      await signin(email.value, password.value);
+      if (!error.value) {
+        console.log("zalogowany");
+      }
     };
 
     return {
       email,
       password,
       showSignUp,
+      handleSubmit,
+      error,
+      signin,
     };
   },
 };

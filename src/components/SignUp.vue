@@ -4,18 +4,33 @@
       <h3 class="sign-up-title">Utwórz konto</h3>
       <span class="sign-up-info">Zarejestruj się, aby kontynuować</span>
     </div>
-    <form>
+    <form @submit.prevent="handleSubmit">
       <div class="form-box">
         <label>Imię i nazwisko</label>
-        <input type="text" v-model="name" />
+        <input
+          type="text"
+          v-model="name"
+          required
+          placeholder="Wpisz imię i nazwisko"
+        />
       </div>
       <div class="form-box">
         <label>Email</label>
-        <input type="text" v-model="email" />
+        <input
+          type="email"
+          v-model="email"
+          required
+          placeholder="Wpisz adres e-mail"
+        />
       </div>
-      <div class="form-box">
+      <div class="form-box password">
         <label>Hasło</label>
-        <input type="text" v-model="password" />
+        <input
+          type="password"
+          v-model="password"
+          required
+          placeholder="Wpisz hasło"
+        />
       </div>
       <button class="form-sign-up">Zarejestruj się</button>
     </form>
@@ -28,6 +43,7 @@
 
 <script>
 import { ref } from "vue";
+import { useSignup } from "../composables/useSignup";
 export default {
   props: ["showModalUp"],
   setup(props, { emit }) {
@@ -35,8 +51,20 @@ export default {
     const email = ref("");
     const password = ref("");
 
+    const { error, signup } = useSignup();
+
     const showSignIn = () => {
       emit("switch-modal", "signIn");
+    };
+
+    const handleSubmit = async () => {
+      if (!error.value) {
+        await signup(name.value, email.value, password.value);
+        if (password.value.length < 6) {
+          error.value = "Hasło powinno składać się z conajmniej 6 znaków";
+        }
+        emit("switch-modal", "signIn");
+      }
     };
 
     return {
@@ -44,6 +72,9 @@ export default {
       email,
       password,
       showSignIn,
+      handleSubmit,
+      error,
+      signup,
     };
   },
 };
@@ -124,5 +155,9 @@ label {
 
 .form-container form button:hover {
   background-color: #3b3b3b;
+}
+
+.password {
+  position: relative;
 }
 </style>
