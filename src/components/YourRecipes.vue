@@ -1,32 +1,30 @@
 <template>
-  <div class="your-recipes">
-    <h3>Twoje przepisy</h3>
-    <div class="recipe-container">
-      <div class="recipe">
-        <img src="../assets/pomidorówka.jpeg" alt="" />
-        <span class="recipe-title">Pomidorówka</span>
-      </div>
-      <div class="recipe">
-        <img src="../assets/schabowy.jpeg" alt="" />
-        <span class="recipe-title">Schabowy z ziemniakami</span>
-      </div>
-      <div class="recipe">
-        <img src="../assets/lody.jpeg" alt="" />
-        <span class="recipe-title">Lody włoskie</span>
-      </div>
-    </div>
-  </div>
+  <RecipesList :recipes="recipes" />
 </template>
 
 <script>
-export default {};
+import { getRecipes } from "../composables/getRecipes";
+import RecipesList from "../components/RecipesList.vue";
+
+export default {
+  components: { RecipesList },
+  setup() {
+    const { recipes, load } = getRecipes();
+    // console.log(recipes);
+    load();
+
+    console.log(recipes);
+
+    return { recipes, load };
+  },
+};
 </script>
 
-<style scoped>
+<style>
 .your-recipes {
   padding: 0 20px;
   font-family: "Roboto", sans-serif;
-  padding-bottom: 50px;
+  padding-bottom: 120px;
 }
 h3 {
   text-align: left;
