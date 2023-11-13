@@ -57,6 +57,7 @@ body {
 .carousel-inner h3 {
   margin-bottom: 30px;
   font-size: 30px;
+  text-align: center;
 }
 .carousel-inner p {
   color: rgb(230, 230, 230);

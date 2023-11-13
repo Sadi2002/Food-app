@@ -1,13 +1,25 @@
 <template>
   <div class="bottom-nav">
     <div class="bottom-nav-box"><i class="fas fa-home"></i></div>
-    <div class="bottom-nav-box plus"><i class="fas fa-plus"></i></div>
+    <div @click="openCreateRecipe" class="bottom-nav-box plus">
+      <i class="fas fa-plus"></i>
+    </div>
     <div class="bottom-nav-box"><i class="fas fa-user"></i></div>
   </div>
 </template>
 
 <script>
-export default {};
+import { useRouter } from "vue-router";
+export default {
+  setup() {
+    const router = useRouter();
+    const openCreateRecipe = () => {
+      router.push({ name: "Recipe" });
+    };
+
+    return { openCreateRecipe };
+  },
+};
 </script>
 
 <style scoped>

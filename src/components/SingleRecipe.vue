@@ -1,6 +1,8 @@
 <template>
   <div class="single-recipe">
-    <router-link :to="{ name: 'SingleRecipe' }"></router-link>
+    <router-link
+      :to="{ name: 'SingleRecipe', params: { id: recipes.id } }"
+    ></router-link>
   </div>
 </template>
 
