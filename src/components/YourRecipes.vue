@@ -10,10 +10,7 @@ export default {
   components: { RecipesList },
   setup() {
     const { recipes, load } = getRecipes();
-    // console.log(recipes);
     load();
-
-    console.log(recipes);
 
     return { recipes, load };
   },

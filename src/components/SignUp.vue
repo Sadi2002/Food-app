@@ -97,8 +97,8 @@ export default {
 }
 
 .sign-up-container.active {
-  top: -350px;
-  height: 600px;
+  top: -380px;
+  height: 630px;
 }
 
 .sign-up-title {

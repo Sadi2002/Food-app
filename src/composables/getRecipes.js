@@ -8,7 +8,6 @@ const getRecipes = () => {
   const load = async () => {
     try {
       const res = await projectFirestore.collection("recipes").get();
-      console.log(res.docs);
 
       recipes.value = res.docs.map((doc) => {
         return { ...doc.data(), id: doc.id };

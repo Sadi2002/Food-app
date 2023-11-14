@@ -4,7 +4,7 @@
       <i class="fas fa-long-arrow-alt-left"></i>Wróć
     </div>
     <h1>Tu się wszystko <span class="colored-red">zaczyna!</span></h1>
-    <form>
+    <form @submit.prevent="sendRecipe">
       <div class="recipe-box">
         <label>Nazwa potrawy</label>
         <input
@@ -24,6 +24,11 @@
         />
       </div>
       <div class="recipe-box">
+        <label>Wybierz zdjęcie</label>
+        <input @change="handleChange" type="file" required />
+        <p class="error">{{ fileError }}</p>
+      </div>
+      <div class="recipe-box">
         <label>Rodzaj potrawy</label>
         <select v-model="tag" required>
           <option>Śniadanie</option>
@@ -40,18 +45,58 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { projectFirestore } from "@/firebase/config";
 export default {
   setup() {
     const title = ref("");
     const desciption = ref("");
     const tag = ref("");
+    const file = ref(null);
+    const fileError = ref(null);
     const router = useRouter();
 
     const backToHome = () => {
       router.push({ path: "/recipes" });
     };
 
-    return { title, desciption, tag, backToHome };
+    const sendRecipe = async () => {
+      const recipe = {
+        title: title.value,
+        desciption: desciption.value,
+        tag: tag.value,
+      };
+
+      const res = await projectFirestore.collection("recipes").add(recipe);
+
+      console.log(title.value, desciption.value, file.value, tag.value);
+
+      router.push({ path: "/recipes" });
+    };
+
+    const allowedImgType = ["image/png", "image/jpg", "image/jpeg"];
+
+    const handleChange = (e) => {
+      const selectedImg = e.target.files[0];
+      if (selectedImg && allowedImgType.includes(selectedImg.type)) {
+        file.value = selectedImg;
+        fileError.value = null;
+      } else {
+        file.value = null;
+        fileError.value =
+          "Wybierz zdjęcie z poprawnym rozszerzeniem (png, jpg, jpeg)";
+      }
+    };
+
+    return {
+      title,
+      desciption,
+      tag,
+      file,
+      backToHome,
+      sendRecipe,
+      handleChange,
+      fileError,
+    };
   },
 };
 </script>
@@ -141,10 +186,17 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 30px;
 }
 
 .back i {
   color: rgb(231 135 76);
+}
+
+input[type="file"] {
+  border: none;
+  padding-left: 5px;
+  height: 40px;
 }
 
 @media (450px <= width) {

@@ -4,7 +4,6 @@ import { ref } from "vue";
 const user = ref(projectAuth.currentUser);
 
 projectAuth.onAuthStateChanged((currentUser) => {
-  console.log(currentUser);
   user.value = currentUser;
 });
 

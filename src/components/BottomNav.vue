@@ -67,4 +67,8 @@ div i {
   color: white;
   transform: rotate(45deg);
 }
+
+.bottom-nav-box:first-of-type i {
+  color: #ff9357;
+}
 </style>
