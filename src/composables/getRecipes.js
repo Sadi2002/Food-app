@@ -10,6 +10,7 @@ const getRecipes = () => {
       const res = await projectFirestore.collection("recipes").get();
 
       recipes.value = res.docs.map((doc) => {
+        console.log(doc.data());
         return { ...doc.data(), id: doc.id };
       });
     } catch (err) {

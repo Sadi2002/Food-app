@@ -21,7 +21,7 @@ export default {};
 
 .search-box input {
   width: 100%;
-  height: 70px;
+  height: 60px;
   border: none;
   border-radius: 20px;
   background-color: #f3f0ea;

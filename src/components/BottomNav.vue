@@ -25,7 +25,7 @@ export default {
 <style scoped>
 .bottom-nav {
   position: fixed;
-  bottom: 0px;
+  bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;

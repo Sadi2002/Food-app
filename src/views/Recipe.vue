@@ -1,5 +1,5 @@
 <template>
-  <div class="recipe">
+  <div class="create-recipe">
     <div @click="backToHome" class="back">
       <i class="fas fa-long-arrow-alt-left"></i>Wróć
     </div>
@@ -37,7 +37,8 @@
           <option>Deser</option>
         </select>
       </div>
-      <button>Dodaj potrawę</button>
+      <button v-if="!isSending">Dodaj potrawę</button>
+      <button class="sending" v-else disabled><div></div></button>
     </form>
   </div>
 </template>
@@ -46,6 +47,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { projectFirestore } from "@/firebase/config";
+import { useStorage } from "../composables/useStorage";
+import { getUser } from "@/composables/getCurrentUser";
 export default {
   setup() {
     const title = ref("");
@@ -53,22 +56,36 @@ export default {
     const tag = ref("");
     const file = ref(null);
     const fileError = ref(null);
+    const isSending = ref(false);
+
+    const { user } = getUser();
+
     const router = useRouter();
+
+    const { url, filePath, uploadImg } = useStorage();
 
     const backToHome = () => {
       router.push({ path: "/recipes" });
     };
 
     const sendRecipe = async () => {
-      const recipe = {
-        title: title.value,
-        desciption: desciption.value,
-        tag: tag.value,
-      };
+      if (file.value) {
+        isSending.value = true;
+        await uploadImg(file.value);
 
-      const res = await projectFirestore.collection("recipes").add(recipe);
+        const recipe = {
+          title: title.value,
+          desciption: desciption.value,
+          tag: tag.value,
+          id: user.value.uid,
+          coverUrl: url.value,
+          filePath: filePath.value,
+        };
 
-      console.log(title.value, desciption.value, file.value, tag.value);
+        const res = await projectFirestore.collection("recipes").add(recipe);
+      } else {
+        isSending.value = false;
+      }
 
       router.push({ path: "/recipes" });
     };
@@ -96,13 +113,17 @@ export default {
       sendRecipe,
       handleChange,
       fileError,
+      url,
+      filePath,
+      uploadImg,
+      isSending,
     };
   },
 };
 </script>
 
 <style scoped>
-.recipe {
+.create-recipe {
   width: 100%;
   height: 100vh;
   border-radius: 0;
@@ -113,6 +134,7 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
+  padding-top: 100px;
 }
 
 form {
@@ -199,12 +221,36 @@ input[type="file"] {
   height: 40px;
 }
 
+.sending {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sending div {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  border-top: 3px solid white;
+  animation: spin 1.2s infinite;
+}
+
 @media (450px <= width) {
   h1 {
     font-size: 40px;
   }
   label {
     font-size: 23px;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

@@ -3,7 +3,7 @@
     <h3>Twoje przepisy</h3>
     <div class="recipe-container">
       <div v-for="rec in recipes" :key="rec.id" class="recipe">
-        <!-- <img src="../assets/pomidorówka.jpeg" alt="" /> -->
+        <img :src="rec.coverUrl" alt="" />
         <span class="recipe-title">{{ rec.title }}</span>
       </div>
     </div>
@@ -17,4 +17,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.recipe-container .recipe {
+  height: 230px;
+  overflow: hidden;
+}
+
+.recipe-container .recipe img {
+  height: 100%;
+}
+</style>
