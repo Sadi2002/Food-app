@@ -29,6 +29,14 @@
         <p class="error">{{ fileError }}</p>
       </div>
       <div class="recipe-box">
+        <label>Wypisz składniki</label>
+        <input
+          type="text"
+          placeholder="Odziel składniki przecinkami"
+          v-model="ingredient"
+        />
+      </div>
+      <div class="recipe-box">
         <label>Rodzaj potrawy</label>
         <select v-model="tag" required>
           <option>Śniadanie</option>
@@ -125,7 +133,7 @@ export default {
 <style scoped>
 .create-recipe {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   border-radius: 0;
   background-color: white;
   padding: 0 30px 30px 30px;
@@ -134,7 +142,7 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 form {
