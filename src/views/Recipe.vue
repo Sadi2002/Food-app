@@ -92,7 +92,7 @@ export default {
 
         const recipe = {
           title: title.value,
-          desciption: desciption.value,
+          description: desciption.value,
           tag: tag.value,
           id: user.value.uid,
           coverUrl: url.value,
