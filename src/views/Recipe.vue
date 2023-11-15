@@ -26,7 +26,7 @@
       <div class="recipe-box">
         <label>Wybierz zdjęcie</label>
         <input @change="handleChange" type="file" required />
-        <p class="error">{{ fileError }}</p>
+        <p v-if="showError" class="error">{{ fileError }}</p>
       </div>
       <div class="recipe-box">
         <label>Wypisz składniki</label>
@@ -35,6 +35,7 @@
           placeholder="Odziel składniki przecinkami"
           v-model="ingredient"
         />
+        <RecipesList :ingredient="ingredients" />
       </div>
       <div class="recipe-box">
         <label>Rodzaj potrawy</label>
@@ -57,14 +58,22 @@ import { useRouter } from "vue-router";
 import { projectFirestore } from "@/firebase/config";
 import { useStorage } from "../composables/useStorage";
 import { getUser } from "@/composables/getCurrentUser";
+
+import { RecipesList } from "../components/RecipesList.vue";
 export default {
+  components: { RecipesList },
   setup() {
     const title = ref("");
     const desciption = ref("");
     const tag = ref("");
+    const ingredientInput = ref("");
+
     const file = ref(null);
     const fileError = ref(null);
+    const showError = ref(false);
     const isSending = ref(false);
+
+    const ingredients = ref([]);
 
     const { user } = getUser();
 
@@ -88,12 +97,19 @@ export default {
           id: user.value.uid,
           coverUrl: url.value,
           filePath: filePath.value,
+          ingredients: ingredients.value,
         };
 
         const res = await projectFirestore.collection("recipes").add(recipe);
       } else {
         isSending.value = false;
       }
+
+      const inputIngredient = ingredientInput.value
+        .split(",")
+        .map((ing) => ing.trim());
+
+      ingredients.value = inputIngredient;
 
       router.push({ path: "/recipes" });
     };
@@ -105,7 +121,9 @@ export default {
       if (selectedImg && allowedImgType.includes(selectedImg.type)) {
         file.value = selectedImg;
         fileError.value = null;
+        showError.value = false;
       } else {
+        showError.value = true;
         file.value = null;
         fileError.value =
           "Wybierz zdjęcie z poprawnym rozszerzeniem (png, jpg, jpeg)";
@@ -125,6 +143,9 @@ export default {
       filePath,
       uploadImg,
       isSending,
+      showError,
+      ingredientInput,
+      ingredients,
     };
   },
 };

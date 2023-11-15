@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Welcome from "../views/Welcome.vue";
 import Recipes from "../views/Recipes.vue";
 import Recipe from "../views/Recipe.vue";
+import Ingredient from "../components/Ingredient.vue";
 import { projectAuth } from "@/firebase/config";
 
 const requireAuth = (to, from, next) => {
@@ -29,6 +30,12 @@ const routes = [
     path: "/recipe",
     name: "Recipe",
     component: Recipe,
+    beforeEnter: requireAuth,
+  },
+  {
+    path: "/ingredient/:id",
+    name: "Ingredient",
+    component: Ingredient,
     beforeEnter: requireAuth,
   },
 ];
