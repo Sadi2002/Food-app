@@ -50,6 +50,7 @@ nav {
 img {
   width: 60px;
   height: 60px;
+  cursor: pointer;
 }
 
 body.path-recipes {

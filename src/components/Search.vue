@@ -42,4 +42,10 @@ export default {};
   transform: translateY(-50%);
   color: rgb(107, 107, 107);
 }
+
+@media (width <= 600px) {
+  .search-box input {
+    height: 80px;
+  }
+}
 </style>

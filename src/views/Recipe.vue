@@ -238,6 +238,7 @@ button:hover {
   align-items: center;
   gap: 10px;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 .back i {

@@ -131,3 +131,66 @@ body {
 .error {
   color: rgb(212, 86, 86);
 }
+
+@media (700px <= width) {
+  body {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .carousel-inner h3 {
+    font-size: 50px;
+  }
+  .carousel-inner p {
+    font-size: 20px;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    width: 15px;
+    height: 15px;
+  }
+  .welcome-header {
+    top: 40%;
+  }
+
+  .single-recipe img {
+    transition: all 0.4s;
+  }
+
+  .single-recipe:hover img {
+    transform: scale(1.1);
+  }
+
+  .back {
+    transition: all 0.3s;
+  }
+  .back:hover {
+    color: rgb(231 135 76);
+  }
+  .back:hover i {
+    animation: back 1s infinite;
+    animation-fill-mode: both;
+  }
+
+  .box {
+    transition: all 0.3s;
+  }
+
+  .box:hover {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes back {
+  0% {
+    transform: translateX(0px);
+  }
+
+  50% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}

@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style scoped>
+.recipe-container {
+  gap: 15px;
+}
 .recipe-container .recipe {
   height: 230px;
   overflow: hidden;
@@ -35,5 +38,18 @@ export default {
 
 .single-recipe {
   width: 100%;
+}
+
+@media (400px <= width) {
+  .single-recipe {
+    width: 48%;
+  }
+
+  .single-recipe .recipe {
+    width: 100%;
+  }
+  .recipe-container {
+    gap: 0px;
+  }
 }
 </style>

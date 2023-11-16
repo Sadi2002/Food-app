@@ -82,6 +82,7 @@ export default {
   align-items: center;
   border-radius: 10px;
   box-shadow: 5px 5px 1px rgba(156, 156, 156, 0.3);
+  cursor: pointer;
 }
 
 img {
@@ -99,12 +100,20 @@ img {
 
 .active-box {
   background-color: rgb(239, 179, 65);
+  box-shadow: 5px 5px 1px rgba(202, 158, 36, 0.3);
 }
 
 @media (350px <= width) {
   .box {
     width: 70px;
     height: 70px;
+  }
+}
+
+@media (600px <= width) {
+  .box {
+    width: 80px;
+    height: 80px;
   }
 }
 </style>

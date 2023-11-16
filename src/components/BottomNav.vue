@@ -37,6 +37,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  max-width: 700px;
 }
 
 .bottom-nav-box {
@@ -46,10 +47,16 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.bottom-nav-box:hover i {
+  color: #ff9357;
 }
 
 div i {
   font-size: 30px;
+  transition: all 0.3s;
 }
 
 .plus {
@@ -58,9 +65,18 @@ div i {
   top: -32px;
   width: 70px;
   height: 70px;
-  transform: rotate(45deg);
+  transform: rotate(45deg) scale(1);
   border-radius: 15px;
   box-shadow: 0 0 10px #ff9357;
+}
+
+.plus:hover {
+  animation: puls 1s infinite;
+  animation-fill-mode: both;
+}
+
+.plus:hover i {
+  color: #fff;
 }
 
 .plus i {
@@ -70,5 +86,26 @@ div i {
 
 .bottom-nav-box:first-of-type i {
   color: #ff9357;
+}
+
+@media (700px <= width) {
+  .bottom-nav {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+@keyframes puls {
+  0% {
+    transform: rotate(45deg) scale(1);
+    box-shadow: 0 0 10px #ff9357;
+  }
+  50% {
+    transform: rotate(45deg) scale(1.1);
+    box-shadow: 0 0 20px #ff9357;
+  }
+  100% {
+    transform: rotate(45deg) scale(1);
+    box-shadow: 0 0 10px #ff9357;
+  }
 }
 </style>
