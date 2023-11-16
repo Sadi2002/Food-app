@@ -8,13 +8,47 @@
       />
     </div>
     <div class="ingredient-box">
-      <span class="ingredient-tag">{{ recipe.tag }}</span>
+      <span class="ingredient-tag">{{ recipe ? recipe.tag : null }}</span>
+      <p class="ingredient-title">{{ recipe ? recipe.title : null }}</p>
+      <div class="ingredient-choose">
+        <div class="ingredient-description-box">
+          <p
+            @click="switchOption1"
+            :class="{ show: showOption1 }"
+            class="ingredient-description"
+          >
+            Opis
+          </p>
+        </div>
+        <div class="ingredient-element-box">
+          <p
+            @click="switchOption2"
+            :class="{ show: showOption2 }"
+            class="ingredient-element"
+          >
+            Składniki
+          </p>
+        </div>
+      </div>
+      <div class="ingredient-options">
+        <div class="ingredient-option1">
+          <span class="ingredient-desc">{{
+            recipe ? recipe.description : null
+          }}</span>
+        </div>
+        <div class="ingredient-option2">
+          <span class="ingredient-el">{{
+            recipe ? recipe.ingredients : null
+          }}</span>
+        </div>
+      </div>
     </div>
     <!-- <h1>{{ recipe ? recipe.coverUrl : null }}</h1> -->
   </div>
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
 import { useStorage } from "../composables/useStorage";
 
 export default {
@@ -22,13 +56,43 @@ export default {
   setup() {
     const { url, filePath, uploadImg } = useStorage();
 
-    return { url, filePath, uploadImg };
+    const showOption1 = ref(true);
+    const showOption2 = ref(false);
+
+    const switchOption1 = () => {
+      showOption2.value = false;
+      showOption1.value = true;
+    };
+    const switchOption2 = () => {
+      showOption1.value = false;
+      showOption2.value = true;
+    };
+
+    onMounted(() => {
+      const path = window.location.pathname;
+      console.log(path);
+
+      if (path !== "/") {
+        document.body.style.backgroundColor = "white";
+      }
+    });
+
+    return {
+      url,
+      filePath,
+      uploadImg,
+      switchOption1,
+      showOption2,
+      showOption1,
+      switchOption2,
+    };
   },
 };
 </script>
-<style>
+<style scoped>
 .ingredient {
   width: 100%;
+  font-family: "Roboto", sans-serif;
 }
 .ingredient .ingredient-img {
   border-radius: 0;
@@ -37,6 +101,11 @@ export default {
 
 .ingredient-img-box {
   position: relative;
+  height: 300px;
+}
+
+.ingredient-img-box img {
+  height: 100%;
 }
 
 .ingredient-img-box::after {
@@ -50,14 +119,54 @@ export default {
 }
 
 .ingredient-box {
-  min-height: 400px;
+  height: 100%;
   background: #fff;
   border-radius: 30px 30px 0 0;
   position: relative;
   top: -30px;
+  padding: 20px 30px;
+  overflow: scroll;
+  flex-grow: 1;
 }
 
 .ingredient-tag {
   display: inline-block;
+  padding: 10px 25px;
+  background: #e5a891;
+  color: #fff;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.ingredient-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.ingredient-choose {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 50px;
+  gap: 15px;
+}
+
+.ingredient-element-box,
+.ingredient-description-box {
+  width: 50%;
+}
+
+.ingredient-description,
+.ingredient-element {
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  color: #3b3b3b;
+  background-color: #f3f0ea;
+}
+
+.show {
+  color: #fff;
+  background-color: #ea7649;
 }
 </style>

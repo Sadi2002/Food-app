@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { projectFirestore } from "@/firebase/config";
 import { useStorage } from "../composables/useStorage";
@@ -129,6 +129,15 @@ export default {
           "Wybierz zdjęcie z poprawnym rozszerzeniem (png, jpg, jpeg)";
       }
     };
+
+    onMounted(() => {
+      const path = window.location.pathname;
+      console.log(path);
+
+      if (path !== "/") {
+        document.body.style.backgroundColor = "white";
+      }
+    });
 
     return {
       title,

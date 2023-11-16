@@ -179,6 +179,10 @@ body {
   .box:hover {
     transform: scale(1.05);
   }
+
+  .ingredient-img-box {
+    height: 400px;
+  }
 }
 
 @keyframes back {
