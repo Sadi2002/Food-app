@@ -33,7 +33,7 @@
         <input
           type="text"
           placeholder="Odziel składniki przecinkami"
-          v-model="ingredient"
+          v-model="ingredients"
         />
         <RecipesList :ingredient="ingredients" />
       </div>
@@ -46,6 +46,7 @@
           <option>Deser</option>
         </select>
       </div>
+
       <button v-if="!isSending">Dodaj potrawę</button>
       <button class="sending" v-else disabled><div></div></button>
     </form>
@@ -81,13 +82,6 @@ export default {
 
     const { url, filePath, uploadImg } = useStorage();
 
-    const recipeData = ref({
-      title: "",
-      description: "",
-      tag: "",
-      ingredients: [],
-    });
-
     const backToHome = () => {
       router.push({ path: "/recipes" });
     };
@@ -97,6 +91,14 @@ export default {
         isSending.value = true;
         await uploadImg(file.value);
 
+        const inputIngredients = ingredients.value.split(",");
+        const trimmedIngredients = inputIngredients.map((ingredient) =>
+          ingredient.trim()
+        );
+
+        // Dodaj składniki do listy
+        ingredients.value = trimmedIngredients;
+
         const recipe = {
           title: title.value,
           description: desciption.value,
@@ -104,28 +106,13 @@ export default {
           id: user.value.uid,
           coverUrl: url.value,
           filePath: filePath.value,
-          ingredients: ingredients.value,
+          ingredients: trimmedIngredients,
         };
 
         const res = await projectFirestore.collection("recipes").add(recipe);
       } else {
         isSending.value = false;
       }
-
-      const inputIngredient = ingredientInput.value
-        .split(",")
-        .map((ing) => ing.trim());
-
-      console.log(inputIngredient);
-
-      ingredients.value = inputIngredient;
-
-      recipeData.value = {
-        title: title.value,
-        description: desciption.value,
-        tag: tag.value,
-        ingredients: inputIngredient,
-      };
 
       try {
         await router.push({ path: "/recipes" });
@@ -148,6 +135,8 @@ export default {
         fileError.value =
           "Wybierz zdjęcie z poprawnym rozszerzeniem (png, jpg, jpeg)";
       }
+
+      console.log(ingredients.value);
     };
 
     onMounted(() => {
@@ -174,7 +163,6 @@ export default {
       showError,
       ingredientInput,
       ingredients,
-      recipeData,
     };
   },
 };

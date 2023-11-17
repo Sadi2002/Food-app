@@ -1,6 +1,6 @@
 <template>
   <div class="ingredient">
-    <div class="ingredient-back">
+    <div class="ingredient-back" @click="backToRecipes">
       <i class="fas fa-long-arrow-alt-left"></i>
     </div>
     <div class="ingredient-img-box">
@@ -42,24 +42,29 @@
           >
         </div>
         <div v-if="showOption2" class="ingredient-option2">
-          <span class="ingredient-el">{{
-            recipe ? recipe.ingredients : null
-          }}</span>
+          <p
+            class="ingredient-name"
+            v-for="(ingredient, index) in recipe.ingredients"
+            :key="index"
+          >
+            {{ capitalizeFirstLetter(ingredient) }}
+          </p>
         </div>
       </div>
     </div>
-    <!-- <h1>{{ recipe ? recipe.coverUrl : null }}</h1> -->
   </div>
 </template>
 
 <script>
 import { onMounted, ref } from "vue";
 import { useStorage } from "../composables/useStorage";
+import { useRouter } from "vue-router";
 
 export default {
   props: ["recipe"],
   setup() {
     const { url, filePath, uploadImg } = useStorage();
+    const router = useRouter();
 
     const showOption1 = ref(true);
     const showOption2 = ref(false);
@@ -72,6 +77,10 @@ export default {
     const switchOption2 = () => {
       showOption1.value = false;
       showOption2.value = true;
+    };
+
+    const backToRecipes = () => {
+      router.push({ path: "/recipes" });
     };
 
     const capitalizeFirstLetter = (text) => {
@@ -96,6 +105,7 @@ export default {
       switchOption2,
       desc,
       capitalizeFirstLetter,
+      backToRecipes,
     };
   },
 };
@@ -186,8 +196,9 @@ export default {
 }
 
 .ingredient-desc {
-  font-size: 18px;
+  font-size: 20px;
   text-align: left;
+  color: #676767;
 }
 
 .ingredient-options {
@@ -217,5 +228,27 @@ export default {
 
 .ingredient-back i {
   font-size: 25px;
+}
+
+.ingredient-option2 {
+  padding-left: 20px;
+}
+
+.ingredient-name {
+  font-size: 20px;
+  position: relative;
+  text-align: left;
+}
+
+.ingredient-name::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ea7649;
+  border-radius: 50%;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
 }
 </style>
