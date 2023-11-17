@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ["recipes"],
+  props: ["recipes", "ingredient"],
   setup() {},
 };
 </script>

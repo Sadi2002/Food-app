@@ -81,6 +81,13 @@ export default {
 
     const { url, filePath, uploadImg } = useStorage();
 
+    const recipeData = ref({
+      title: "",
+      description: "",
+      tag: "",
+      ingredients: [],
+    });
+
     const backToHome = () => {
       router.push({ path: "/recipes" });
     };
@@ -109,9 +116,22 @@ export default {
         .split(",")
         .map((ing) => ing.trim());
 
+      console.log(inputIngredient);
+
       ingredients.value = inputIngredient;
 
-      router.push({ path: "/recipes" });
+      recipeData.value = {
+        title: title.value,
+        description: desciption.value,
+        tag: tag.value,
+        ingredients: inputIngredient,
+      };
+
+      try {
+        await router.push({ path: "/recipes" });
+      } catch (err) {
+        console.log(err.message);
+      }
     };
 
     const allowedImgType = ["image/png", "image/jpg", "image/jpeg"];
@@ -132,7 +152,6 @@ export default {
 
     onMounted(() => {
       const path = window.location.pathname;
-      console.log(path);
 
       if (path !== "/") {
         document.body.style.backgroundColor = "white";
@@ -155,6 +174,7 @@ export default {
       showError,
       ingredientInput,
       ingredients,
+      recipeData,
     };
   },
 };

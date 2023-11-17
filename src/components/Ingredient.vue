@@ -1,5 +1,8 @@
 <template>
   <div class="ingredient">
+    <div class="ingredient-back">
+      <i class="fas fa-long-arrow-alt-left"></i>
+    </div>
     <div class="ingredient-img-box">
       <img
         class="ingredient-img"
@@ -31,12 +34,14 @@
         </div>
       </div>
       <div class="ingredient-options">
-        <div class="ingredient-option1">
-          <span class="ingredient-desc">{{
-            recipe ? recipe.description : null
-          }}</span>
+        <div v-if="showOption1" class="ingredient-option1">
+          <span class="ingredient-desc" ref="desc">
+            {{
+              recipe ? capitalizeFirstLetter(recipe.description) : null
+            }}</span
+          >
         </div>
-        <div class="ingredient-option2">
+        <div v-if="showOption2" class="ingredient-option2">
           <span class="ingredient-el">{{
             recipe ? recipe.ingredients : null
           }}</span>
@@ -58,6 +63,7 @@ export default {
 
     const showOption1 = ref(true);
     const showOption2 = ref(false);
+    const desc = ref(null);
 
     const switchOption1 = () => {
       showOption2.value = false;
@@ -68,9 +74,12 @@ export default {
       showOption2.value = true;
     };
 
+    const capitalizeFirstLetter = (text) => {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    };
+
     onMounted(() => {
       const path = window.location.pathname;
-      console.log(path);
 
       if (path !== "/") {
         document.body.style.backgroundColor = "white";
@@ -85,6 +94,8 @@ export default {
       showOption2,
       showOption1,
       switchOption2,
+      desc,
+      capitalizeFirstLetter,
     };
   },
 };
@@ -93,6 +104,7 @@ export default {
 .ingredient {
   width: 100%;
   font-family: "Roboto", sans-serif;
+  position: relative;
 }
 .ingredient .ingredient-img {
   border-radius: 0;
@@ -125,13 +137,18 @@ export default {
   position: relative;
   top: -30px;
   padding: 20px 30px;
-  overflow: scroll;
+  overflow: hidden;
+  overflow-y: scroll;
   flex-grow: 1;
+}
+
+.ingredient-box::-webkit-scrollbar {
+  width: 0;
 }
 
 .ingredient-tag {
   display: inline-block;
-  padding: 10px 25px;
+  padding: 5px 20px;
   background: #e5a891;
   color: #fff;
   border-radius: 20px;
@@ -147,13 +164,15 @@ export default {
 .ingredient-choose {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   gap: 15px;
+  border-bottom: 1px solid #dbdad8;
 }
 
 .ingredient-element-box,
 .ingredient-description-box {
   width: 50%;
+  cursor: pointer;
 }
 
 .ingredient-description,
@@ -163,10 +182,40 @@ export default {
   border-radius: 15px;
   color: #3b3b3b;
   background-color: #f3f0ea;
+  margin-bottom: 30px;
+}
+
+.ingredient-desc {
+  font-size: 18px;
+  text-align: left;
+}
+
+.ingredient-options {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .show {
   color: #fff;
   background-color: #ea7649;
+}
+
+.ingredient-back {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.ingredient-back i {
+  font-size: 25px;
 }
 </style>
