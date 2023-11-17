@@ -1,4 +1,6 @@
 <template>
+  <Search />
+  <Filters />
   <div class="your-recipes">
     <h3>Twoje przepisy</h3>
     <div v-if="recipes && recipes.length > 0" class="recipe-container">
@@ -18,9 +20,15 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import Search from "../components/Search.vue";
+import Filters from "../components/Filters.vue";
 export default {
+  components: { Search, Filters },
   props: ["recipes", "ingredient"],
-  setup() {},
+  setup() {
+    const searchRecipe = ref(null);
+  },
 };
 </script>
 

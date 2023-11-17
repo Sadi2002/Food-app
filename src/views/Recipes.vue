@@ -1,7 +1,5 @@
 <template>
   <Navbar />
-  <Search />
-  <Filters />
   <YourRecipes />
   <BottomNav />
 </template>

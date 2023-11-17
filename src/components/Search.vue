@@ -6,7 +6,14 @@
 </template>
 
 <script>
-export default {};
+import { ref } from "vue";
+export default {
+  setup() {
+    const recipe = ref("");
+
+    return { recipe };
+  },
+};
 </script>
 
 <style scoped>
