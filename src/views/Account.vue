@@ -5,8 +5,8 @@
     </div>
     <div class="about-you">
       <img src="../assets/user.png" alt="zdjęcie uzytkownika" />
-      <h2 class="about-you-title">Test</h2>
-      <p class="about-you-email">testowy@gmail.com</p>
+      <h2 class="about-you-title">{{ user.displayName }}</h2>
+      <p class="about-you-email">{{ user.email }}</p>
       <button @click="goToEdit" class="changeData">Edytuj dane</button>
     </div>
     <div class="setting-general">
@@ -31,7 +31,7 @@
       </div>
       <div class="share-recipes"></div>
     </div>
-    <button class="log-out">Wyloguj się</button>
+    <button @click="handleLogout" class="log-out">Wyloguj się</button>
   </div>
 </template>
 
@@ -39,9 +39,19 @@
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getUser } from "../composables/getCurrentUser";
+import { useLogout } from "../composables/useLogout";
 export default {
   setup() {
     const { user } = getUser();
+    const { logout } = useLogout();
+
+    const handleLogout = async () => {
+      logout();
+      router.push({ path: "/" });
+      document.body.style.backgroundColor = "#ea7649";
+    };
+
+    console.log(user.value);
 
     const route = useRoute();
     const router = useRouter();
@@ -80,6 +90,8 @@ export default {
       toggleSlider,
       selectedLanguage,
       goToEdit,
+      logout,
+      handleLogout,
     };
   },
 };
@@ -199,7 +211,7 @@ label[for="language"] {
 }
 
 .slider {
-  width: 70px;
+  width: 60px;
   height: 30px;
   background-color: rgb(195, 195, 195);
   border-radius: 20px;
@@ -232,7 +244,7 @@ label[for="language"] {
 }
 
 .slider.active .slider-ball {
-  transform: translateX(40px);
+  transform: translateX(30px);
 }
 
 .log-out {

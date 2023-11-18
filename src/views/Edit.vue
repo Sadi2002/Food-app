@@ -14,31 +14,40 @@
       <form>
         <div class="changeInput-box">
           <label for="name">Imię</label>
-          <input type="text" placeholder="Wpisz imię" />
+          <input v-model="editName" type="text" placeholder="Wpisz imię" />
         </div>
         <div class="changeInput-box">
           <label for="name">Email</label>
-          <input type="email" placeholder="Wpisz email" />
+          <input v-model="editEmail" type="email" placeholder="Wpisz email" />
         </div>
         <div class="changeInput-box">
           <label for="name">Hasło</label>
-          <input type="password" placeholder="Wpisz hasło" />
+          <input
+            v-model="editPassword"
+            type="password"
+            placeholder="Wpisz hasło"
+          />
         </div>
       </form>
     </div>
     <div class="save">
-      <button>Zapisz</button>
+      <button @click="sendEdit">Zapisz</button>
     </div>
   </div>
 </template>
 
 <script>
+import { projectAuth } from "../firebase/config";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+
+    const editName = ref("");
+    const editEmail = ref("");
+    const editPassword = ref("");
 
     const file = ref(null);
     const fileError = ref(null);
@@ -73,7 +82,21 @@ export default {
       router.push({ path: "/account" });
     };
 
-    return { handleChange, file, fileError, showError, backToRecipes };
+    const sendEdit = async () => {
+      router.push({ path: "/account" });
+    };
+
+    return {
+      handleChange,
+      file,
+      fileError,
+      showError,
+      backToRecipes,
+      editName,
+      editEmail,
+      editPassword,
+      sendEdit,
+    };
   },
 };
 </script>
