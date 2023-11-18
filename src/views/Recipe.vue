@@ -189,6 +189,7 @@ form {
 
 h1 {
   font-size: 30px;
+  margin-bottom: 30px;
 }
 
 .recipe-box {

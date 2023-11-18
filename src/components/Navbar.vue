@@ -3,19 +3,20 @@
     <h1 class="nav-title">
       Hi, <span class="colored-red">{{ user.displayName }}</span>
     </h1>
-    <img src="../assets/user.png" alt="" />
+    <img @click="goToSetting" src="../assets/user.png" alt="" />
   </nav>
 </template>
 
 <script>
 import { onMounted } from "vue";
 import { getUser } from "../composables/getCurrentUser.js";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default {
   setup() {
     const { user } = getUser();
 
     const route = useRoute();
+    const router = useRouter();
 
     onMounted(() => {
       if (route.path === "/recipes") {
@@ -26,7 +27,11 @@ export default {
       }
     });
 
-    return { user };
+    const goToSetting = () => {
+      router.push({ path: "/account" });
+    };
+
+    return { user, goToSetting };
   },
 };
 </script>

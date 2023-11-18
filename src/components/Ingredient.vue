@@ -52,6 +52,7 @@
         </div>
       </div>
     </div>
+    <button class="share-recipe">Udostępnij</button>
   </div>
 </template>
 
@@ -250,5 +251,22 @@ export default {
   top: 50%;
   left: -20px;
   transform: translateY(-50%);
+}
+
+.share-recipe {
+  width: 200px;
+  height: 50px;
+  background: #e5a891;
+  color: #fff;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border: none;
+  font-size: 20px;
+  margin-top: 15px;
+  position: relative;
+  top: -20px;
 }
 </style>

@@ -1,17 +1,23 @@
 <template>
   <div class="search-box">
-    <input type="text" v-model="recipe" placeholder="Wyszukaj" />
+    <input type="text" v-model="searchText" placeholder="Wyszukaj" />
     <i class="fas fa-search"></i>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 export default {
   setup() {
-    const recipe = ref("");
+    const searchText = ref("");
 
-    return { recipe };
+    watch(searchText, (newValue) => {
+      // Wysyła frazę wyszukiwania do rodzica (RecipeList)
+      // poprzez emitowanie zdarzenia
+      emit("updateRecipes", newValue);
+    });
+
+    return { searchText };
   },
 };
 </script>

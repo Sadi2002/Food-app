@@ -132,6 +132,10 @@ body {
   color: rgb(212, 86, 86);
 }
 
+.setting {
+  max-width: 700px;
+}
+
 @media (700px <= width) {
   body {
     max-width: 700px;

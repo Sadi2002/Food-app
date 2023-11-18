@@ -4,7 +4,9 @@
     <div @click="openCreateRecipe" class="bottom-nav-box plus">
       <i class="fas fa-plus"></i>
     </div>
-    <div class="bottom-nav-box"><i class="fas fa-user"></i></div>
+    <div @click="openSettings" class="bottom-nav-box">
+      <i class="fas fa-user"></i>
+    </div>
   </div>
 </template>
 
@@ -17,7 +19,11 @@ export default {
       router.push({ name: "Recipe" });
     };
 
-    return { openCreateRecipe };
+    const openSettings = () => {
+      router.push({ name: "Account" });
+    };
+
+    return { openCreateRecipe, openSettings };
   },
 };
 </script>
