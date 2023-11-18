@@ -22,16 +22,17 @@
           </div>
         </div>
       </div>
-      <div class="language-box">
+      <!-- <div class="language-box">
         <label for="language">Wybierz język:</label>
         <select id="language" v-model="selectedLanguage">
           <option value="pl">Polski</option>
           <option value="en">Angielski</option>
         </select>
-      </div>
+      </div> -->
       <div class="share-recipes"></div>
     </div>
     <button @click="handleLogout" class="log-out">Wyloguj się</button>
+    <button @click="removeAccount" class="delete-account">Usuń konto</button>
   </div>
 </template>
 
@@ -40,6 +41,8 @@ import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getUser } from "../composables/getCurrentUser";
 import { useLogout } from "../composables/useLogout";
+import { projectAuth } from "@/firebase/config";
+
 export default {
   setup() {
     const { user } = getUser();
@@ -51,12 +54,28 @@ export default {
       document.body.style.backgroundColor = "#ea7649";
     };
 
-    console.log(user.value);
+    const removeAccount = async () => {
+      try {
+        const user = projectAuth.currentUser;
+
+        console.log(user);
+
+        if (user) {
+          await user.delete();
+          router.push({ path: "/" });
+          if (route.path === "/recipes") {
+            document.body.style.backgroundColor = "#ea7649";
+          }
+        } else {
+          console.error("Użytkownik nie jest zalogowany.");
+        }
+      } catch (error) {
+        console.error("Błąd podczas usuwania konta:", error.message);
+      }
+    };
 
     const route = useRoute();
     const router = useRouter();
-
-    const selectedLanguage = ref("pl");
 
     const goToEdit = () => {
       router.push({ path: "/edit" });
@@ -75,6 +94,9 @@ export default {
 
     const toggleSlider = () => {
       isActive.value = !isActive.value;
+      // Dodaj dynamiczną klasę do body w zależności od wartości isActive
+      document.body.classList.toggle("dark-bg", isActive.value);
+      document.body.classList.toggle("light-bg", !isActive.value);
     };
 
     const backToRecipes = () => {
@@ -88,10 +110,10 @@ export default {
       backToRecipes,
       isActive,
       toggleSlider,
-      selectedLanguage,
       goToEdit,
       logout,
       handleLogout,
+      removeAccount,
     };
   },
 };
@@ -247,10 +269,11 @@ label[for="language"] {
   transform: translateX(30px);
 }
 
-.log-out {
+.log-out,
+.delete-account {
   width: 200px;
   height: 50px;
-  background: rgb(223, 89, 89);
+  background: rgb(231 135 76);
   color: #fff;
   border-radius: 15px;
   display: flex;
@@ -265,7 +288,13 @@ label[for="language"] {
   transition: all 0.3s;
 }
 
-.log-out:hover {
+.log-out:hover,
+.delete-account {
   background-color: rgb(231 135 76);
+}
+
+.delete-account {
+  background: rgb(223, 89, 89);
+  margin-top: 30px;
 }
 </style>

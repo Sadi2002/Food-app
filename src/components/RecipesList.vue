@@ -8,26 +8,26 @@
   <!-- Filters -->
   <div class="filter-container">
     <div class="filter">
-      <div class="filter-box" @click="toggleActive(1)">
-        <div class="box" :class="{ 'active-box': activeBoxes.includes(1) }">
+      <div class="filter-box">
+        <div class="box">
           <img src="../assets/breakfast.png" alt="Ikonka śniadania" />
         </div>
         <span class="filter-name">Śniadanie</span>
       </div>
-      <div class="filter-box" @click="toggleActive(2)">
-        <div class="box" :class="{ 'active-box': activeBoxes.includes(2) }">
+      <div class="filter-box">
+        <div class="box">
           <img src="../assets/meal.png" alt="Ikonka obiadu" />
         </div>
         <span class="filter-name">Obiad</span>
       </div>
-      <div class="filter-box" @click="toggleActive(3)">
-        <div class="box" :class="{ 'active-box': activeBoxes.includes(3) }">
+      <div class="filter-box">
+        <div class="box">
           <img src="../assets/evening.webp" alt="Ikonka kolacji" />
         </div>
         <span class="filter-name">Kolacja</span>
       </div>
-      <div class="filter-box" @click="toggleActive(4)">
-        <div class="box" :class="{ 'active-box': activeBoxes.includes(4) }">
+      <div class="filter-box">
+        <div class="box">
           <img src="../assets/deser.png" alt="Ikonka deseru" />
         </div>
         <span class="filter-name">Deser</span>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import Search from "../components/Search.vue";
 import Filters from "../components/Filters.vue";
 export default {
@@ -75,16 +75,6 @@ export default {
     const activeBoxes = ref([]);
 
     const searchText = ref("");
-
-    const toggleActive = (index) => {
-      const isActive = activeBoxes.value.includes(index);
-
-      if (isActive) {
-        activeBoxes.value = activeBoxes.value.filter((i) => i !== index);
-      } else {
-        activeBoxes.value.push(index);
-      }
-    };
 
     const filteredRecipes = computed(() => {
       if (!props.recipes) return [];
@@ -106,7 +96,7 @@ export default {
       searchRecipe,
       searchText,
       activeBoxes,
-      toggleActive,
+
       filteredRecipes,
     };
   },

@@ -79,6 +79,8 @@ export default {
 
     const { user } = getUser();
 
+    console.log(user.value);
+
     const router = useRouter();
 
     const { url, filePath, uploadImg } = useStorage();
@@ -174,7 +176,6 @@ export default {
   width: 100%;
   min-height: 100vh;
   border-radius: 0;
-  background-color: white;
   padding: 0 30px 30px 30px;
   font-family: "Roboto", sans-serif;
   display: flex;

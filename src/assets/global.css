@@ -136,6 +136,49 @@ body {
   max-width: 700px;
 }
 
+body.dark-bg {
+  background-color: #333 !important;
+  color: white;
+}
+
+body.light-bg {
+  background-color: white !important;
+  color: #333;
+}
+
+body.dark-bg nav {
+  background-color: #3b3b3b;
+}
+
+body.dark-bg .filter-name {
+  color: #fff;
+}
+
+body.dark-bg .theme {
+  color: #fff;
+}
+
+body.light-bg .ingredient-box {
+  background-color: #fff !important;
+}
+body.dark-bg .ingredient-box {
+  background-color: #333 !important;
+}
+body.dark-bg .ingredient-desc {
+  color: #ffff;
+}
+body.dark-bg .ingredient-back i {
+  color: #333;
+}
+
+body.dark-bg label {
+  color: #fff;
+}
+
+body.dark-bg .camera {
+  border-color: #333;
+}
+
 @media (700px <= width) {
   body {
     max-width: 700px;
