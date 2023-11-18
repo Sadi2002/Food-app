@@ -11,7 +11,6 @@
     </div>
     <div class="setting-general">
       <div class="general-box">
-        <div class="general">Ogólne</div>
         <div class="theme-container">
           <p class="theme">Ciemny motyw</p>
           <div
@@ -224,7 +223,7 @@ label[for="language"] {
 }
 
 .slider.active {
-  background: orange;
+  background: rgb(231 135 76);
 }
 
 .language-box {

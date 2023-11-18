@@ -34,6 +34,7 @@
           type="text"
           placeholder="Odziel składniki przecinkami"
           v-model="ingredients"
+          required
         />
         <RecipesList :ingredient="ingredients" />
       </div>
