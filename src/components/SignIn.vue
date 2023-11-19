@@ -56,7 +56,7 @@ export default {
     const handleSubmit = async () => {
       await signin(email.value, password.value);
       if (!error.value) {
-        router.push({ name: "Recipes" });
+        emit("login");
       }
     };
 

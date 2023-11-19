@@ -63,18 +63,32 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import Search from "../components/Search.vue";
 import Filters from "../components/Filters.vue";
+import { getUser } from "../composables/getCurrentUser";
+
+import { useRouter } from "vue-router";
+
 export default {
   components: { Search, Filters },
   props: ["recipes", "ingredient"],
   setup(props) {
     const searchRecipe = ref(null);
 
+    const { user } = getUser();
+
+    const router = useRouter();
+
     const activeBoxes = ref([]);
 
     const searchText = ref("");
+
+    watch(user, () => {
+      if (!user.value) {
+        router.push({ path: "/" });
+      }
+    });
 
     const filteredRecipes = computed(() => {
       if (!props.recipes) return [];

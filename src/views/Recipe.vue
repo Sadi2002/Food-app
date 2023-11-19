@@ -73,6 +73,9 @@ export default {
     const file = ref(null);
     const fileError = ref(null);
     const showError = ref(false);
+
+    const userRecipes = ref([]);
+
     const isSending = ref(false);
 
     const ingredients = ref([]);
@@ -142,12 +145,19 @@ export default {
       console.log(ingredients.value);
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       const path = window.location.pathname;
 
       if (path !== "/") {
         document.body.style.backgroundColor = "white";
       }
+
+      const querySnapshot = await projectFirestore
+        .collection("recipes")
+        .where("id", "==", user.value.uid)
+        .get();
+
+      userRecipes.value = querySnapshot.docs.map((doc) => doc.data());
     });
 
     return {
@@ -166,6 +176,7 @@ export default {
       showError,
       ingredientInput,
       ingredients,
+      userRecipes,
     };
   },
 };

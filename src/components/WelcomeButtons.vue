@@ -5,7 +5,11 @@
       <button @click.prevent="signin" class="signin">Zaloguj się</button>
     </form>
     <SignUp :showModalUp="showModalUp" @switch-modal="switchModal" />
-    <SignIn :showModalIn="showModalIn" @switch-modal="switchModal" />
+    <SignIn
+      @login="enterChat"
+      :showModalIn="showModalIn"
+      @switch-modal="switchModal"
+    />
   </div>
 </template>
 
@@ -13,12 +17,19 @@
 import { ref } from "vue";
 import SignUp from "./SignUp.vue";
 import SignIn from "./SignIn.vue";
+import { useRouter } from "vue-router";
 
 export default {
   components: { SignUp, SignIn },
   setup() {
     const showModalUp = ref(false);
     const showModalIn = ref(false);
+
+    const router = useRouter();
+
+    const enterChat = () => {
+      router.push({ path: "/recipes" });
+    };
 
     const signup = () => {
       showModalUp.value = true;
@@ -44,6 +55,7 @@ export default {
       showModalUp,
       showModalIn,
       switchModal,
+      enterChat,
     };
   },
 };
